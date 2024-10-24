@@ -207,6 +207,6 @@ if __name__ == "__main__":
     
     # 为每个讲座设置预约任务，间隔0.5秒
     for i, lecture in enumerate(lectures):
-        scheduler.add_job(rob, 'cron', hour=19, minute=0, second=i*0.5, args=[lecture])
+        scheduler.add_job(rob, 'interval', seconds=0.5, args=[lecture])
     
     scheduler.start()
