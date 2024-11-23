@@ -175,6 +175,7 @@ def rob(lecture):
     print(f"定时预约任务开始, 讲座: {lecture['JZMC']}, wid: {lecture['WID']}")
     for attempt in range(3):
         # 获取验证码图片
+        time.sleep(0.3)
         verify_code_img_base64 = get_lecture_verify_code(lecture['WID'])
         # 解析验证码
         verify_code = parse_verify_code(verify_code_img_base64)
@@ -185,8 +186,8 @@ def rob(lecture):
         if res:
             break
         elif attempt == 0:
-            print("预约失败，1秒后重试")
-            time.sleep(1)
+            print("预约失败，1.5秒后重试")
+            time.sleep(1.2)
     
 
 if __name__ == "__main__":
@@ -205,7 +206,7 @@ if __name__ == "__main__":
     scheduler = BlockingScheduler()
     scheduler.add_job(keep_alive, 'interval', seconds=30, args=[lectures[0]['WID']])
     
-    # 为每个讲座设置预约任务，间隔0.5秒
+    # 为每个讲座设置预约任务，间隔1.5秒
     for i, lecture in enumerate(lectures):
         scheduler.add_job(rob, 'cron', hour=19, minute=0, second=i*1, args=[lecture])
     
